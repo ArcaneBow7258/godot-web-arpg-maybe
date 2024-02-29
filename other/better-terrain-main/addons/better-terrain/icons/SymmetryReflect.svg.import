@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cxoewno1cefua"
-path="res://.godot/imported/SymmetryReflect.svg-39f88a51808c88d6cb37005ed1ddd254.ctex"
+path="res://.godot/imported/SymmetryReflect.svg-e40e16d1496ecbae8f8cd63e6ab63253.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/better-terrain/icons/SymmetryReflect.svg"
-dest_files=["res://.godot/imported/SymmetryReflect.svg-39f88a51808c88d6cb37005ed1ddd254.ctex"]
+source_file="res://other/better-terrain-main/addons/better-terrain/icons/SymmetryReflect.svg"
+dest_files=["res://.godot/imported/SymmetryReflect.svg-e40e16d1496ecbae8f8cd63e6ab63253.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c1bmbyb3ig0mx"
-path="res://.godot/imported/SymmetryRotate180.svg-ff244f85658bd621d56af3cf4f7c7ebe.ctex"
+path="res://.godot/imported/SymmetryRotate180.svg-7d37653c049ce6f44b45211d8f6973bc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/better-terrain/icons/paint-symmetry/SymmetryRotate180.svg"
-dest_files=["res://.godot/imported/SymmetryRotate180.svg-ff244f85658bd621d56af3cf4f7c7ebe.ctex"]
+source_file="res://other/better-terrain-main/addons/better-terrain/icons/paint-symmetry/SymmetryRotate180.svg"
+dest_files=["res://.godot/imported/SymmetryRotate180.svg-7d37653c049ce6f44b45211d8f6973bc.ctex"]
 
 [params]
 

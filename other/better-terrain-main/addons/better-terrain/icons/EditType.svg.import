@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c6lxq2y7mpb18"
-path="res://.godot/imported/EditType.svg-e7b3005c6a8f21d5102295c55b564ad1.ctex"
+path="res://.godot/imported/EditType.svg-3e7da8f9832d989d1a26459ec7f697d2.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/better-terrain/icons/EditType.svg"
-dest_files=["res://.godot/imported/EditType.svg-e7b3005c6a8f21d5102295c55b564ad1.ctex"]
+source_file="res://other/better-terrain-main/addons/better-terrain/icons/EditType.svg"
+dest_files=["res://.godot/imported/EditType.svg-3e7da8f9832d989d1a26459ec7f697d2.ctex"]
 
 [params]
 

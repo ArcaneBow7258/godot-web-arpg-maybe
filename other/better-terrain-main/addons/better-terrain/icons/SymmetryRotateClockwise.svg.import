@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://baxhjy28r1iqj"
-path="res://.godot/imported/SymmetryRotateClockwise.svg-9d1254877c31fcd2b5fd3dd58555e624.ctex"
+path="res://.godot/imported/SymmetryRotateClockwise.svg-29cee3917c99fbbd2ab840d8a7643ad9.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/better-terrain/icons/SymmetryRotateClockwise.svg"
-dest_files=["res://.godot/imported/SymmetryRotateClockwise.svg-9d1254877c31fcd2b5fd3dd58555e624.ctex"]
+source_file="res://other/better-terrain-main/addons/better-terrain/icons/SymmetryRotateClockwise.svg"
+dest_files=["res://.godot/imported/SymmetryRotateClockwise.svg-29cee3917c99fbbd2ab840d8a7643ad9.ctex"]
 
 [params]
 
