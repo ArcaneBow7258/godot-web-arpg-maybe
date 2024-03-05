@@ -16,10 +16,9 @@ script = ExtResource("2_w37wi")
 bounds = Vector2i(32, 16)
 chances = Array[int]([1, 2, 1, 1])
 max_iter = 100
-smoothing = 4
 n_drunkards = 4
 tilemap = NodePath("../TileMap")
-starting = Vector2i(8, 12)
+starting = Vector2i(8, 10)
 seed = 818
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
