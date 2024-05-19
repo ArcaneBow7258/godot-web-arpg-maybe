@@ -9,6 +9,7 @@ extends Node2D
 @export var starting : Vector2i
 @export var seed : int
 func _ready():
+	return
 	var area = []
 	for i in bounds[0]:
 		for j in bounds[1]:
@@ -52,46 +53,108 @@ func _ready():
 		if typeof(area[idx]) != 2:
 			#print(idx, Vector2i(idx % x, floori(idx / x)))
 			tilemap.set_cell(0, Vector2i(idx % x, floori(idx / x)), 0,  area[idx])
-		
+	#Start tile
 	tilemap.set_cell(0, starting,0, Vector2i(1,3) )
-	var floors = tilemap.get_used_cells_by_id(0, 0, Vector2i(1,4))	
-	for i in range(smoothing):
-		var marked_w = {}
-		var marked_f = {}
+	smooth(smoothing)
+	make_pretty()
+	#BetterTerrain.update_terrain_area(tilemap, 0, Rect2i(-3, -3, bounds[0] + 6, bounds[1] + 6), true)
+	print(drunkards)
+func get_surrounding_data(cords):
+	var floor_count = 0
+	var wall_count = 0
+	var trim_count = 0
+	for t in tilemap.get_surrounding_cells(cords): # consider the sujrrounding cells of cell
+		var data = BetterTerrain.get_tile_terrain_type(tilemap.get_cell_tile_data(0, t))
+		if  data == 0:
+			floor_count += 1
+		elif data == 1 and (cords - t == Vector2i.UP):
+			wall_count += 1
+		elif data == 2:
+			trim_count += 1
+	return {'floors': floor_count, 'walls': wall_count, 'trims':trim_count}
+func smooth(smooth_count):
+	var x = bounds[0]
+	var y = bounds[1]		
+	for i in range(smooth_count):
+		var marked = {}
 		for idx in range(x*y): # iterate through all cells
 			var cords = Vector2i(idx % x, floori(idx / x))
 			var c_data = tilemap.get_cell_tile_data(0, cords)
-			if c_data:
+			if c_data: # don't update anything that already has data
 				continue
-			var floor_count = 0
-			var wall_count = 0
-			var trim_count = 0
-			for t in tilemap.get_surrounding_cells(cords): # consider the sujrrounding cells of cell
-				var data = BetterTerrain.get_tile_terrain_type(tilemap.get_cell_tile_data(0, t))
-				if  data == 0:
-					floor_count += 1
-				elif data == 1 and (cords - t == Vector2i.UP):
-					wall_count += 1
-				elif data == 2:
-					trim_count += 1
-				if(floor_count >= 2):
-					pass
-					marked_f[cords] = 0
-					#tilemap.set_cell(0,cords, 0, floor_cord)
-				elif(floor_count == 1):
-					marked_f[cords] = 1
-				elif(wall_count >= 1 and trim_count <= 2):
-					marked_f[cords] = 2
-				elif(floor_count == 0):
-					tilemap.erase_cell(0,cords)
-		var change_f = BetterTerrain.create_terrain_changeset(tilemap, 0, marked_f)
-		BetterTerrain.wait_for_terrain_changeset(change_f)
-		BetterTerrain.apply_terrain_changeset(change_f)
-		var change_w = BetterTerrain.create_terrain_changeset(tilemap, 0, marked_w)
-		BetterTerrain.wait_for_terrain_changeset(change_w)
-		BetterTerrain.apply_terrain_changeset(change_w)
+			# counting
+			var counts = get_surrounding_data(cords)
+			var floor_count = counts['floors']		
+			var wall_count = counts['walls']
+			var trim_count = counts['trims']
+			
+			
+			if(floor_count >= 2):
+				marked[cords] = 0 # make floor
+				#tilemap.set_cell(0,cords, 0, floor_cord)
+				
+		var change = BetterTerrain.create_terrain_changeset(tilemap, 0, marked)
+		BetterTerrain.wait_for_terrain_changeset(change)
+		BetterTerrain.apply_terrain_changeset(change)
+
 		
 	
-	BetterTerrain.update_terrain_area(tilemap, 0, Rect2i(0,0, x, y), true)
-	print(drunkards)
+	
+
+func make_pretty():
+	var x = bounds[0]
+	var y = bounds[1]		
+	var floors = tilemap.get_used_cells_by_id(0, 0, Vector2i(1,4))	
+	
+	# iterative pass, needs constant passes to make evryhting look good
+	# make walls
+	var marked = {}
+	for idx in range((x+1)*(y+1)): # iterate through all cells
+		var cords = Vector2i(idx % x, floori(idx / x))
+		var c_data = tilemap.get_cell_tile_data(0, cords)
+		if c_data:
+			continue
+		# counting
+		var counts = get_surrounding_data(cords)
+		var floor_count = counts['floors']		
+		var wall_count = counts['walls']
+		var trim_count = counts['trims']
+		
+		if floor_count >= 1:
+			marked[cords] = 1
+	apply_and_wait(tilemap, 0, marked)
+	marked = {}
+	# make trim
+	for idx in range((x+2)*(y+2)): # iterate through all cells
+		var cords = Vector2i(idx % x, floori(idx / x))
+		var c_data = tilemap.get_cell_tile_data(0, cords)
+		if c_data:
+			continue
+		var wall_count = 0
+		for t in tilemap.get_surrounding_cells(cords): # consider the sujrrounding cells of cell
 			
+			var data = BetterTerrain.get_tile_terrain_type(tilemap.get_cell_tile_data(0, t))
+			if data == 1:
+				wall_count += 1
+			if data == 1:
+				marked[cords] = 2
+		if wall_count >= 3:
+			marked[cords] = 1
+	#apply_and_wait(tilemap, 0, marked)
+	marked = {}
+	# corne trimps
+	for idx in range((x+2)*(y+2)): # iterate through all cells
+		var cords = Vector2i(idx % x, floori(idx / x))
+		var c_data = tilemap.get_cell_tile_data(0, cords)
+		if c_data:
+			continue
+		var counts = get_surrounding_data(cords)
+		var trim_count = counts['trims']
+		if trim_count == 2:
+			marked[cords] = 3
+	#apply_and_wait(tilemap, 0, marked)
+	
+func apply_and_wait(tilemap, layer, marked):
+	var change = BetterTerrain.create_terrain_changeset(tilemap, layer, marked)
+	BetterTerrain.wait_for_terrain_changeset(change)
+	BetterTerrain.apply_terrain_changeset(change)

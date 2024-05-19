@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://dm3wjkf6jjgeq"]
+
+[ext_resource type="Texture2D" uid="uid://d1j45o251jone" path="res://Atlas/Bars.tres" id="1_1s6cp"]
+[ext_resource type="Script" path="res://Scripts/Life.gd" id="2_a7ge1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w3wsc"]
+atlas = ExtResource("1_1s6cp")
+region = Rect2(195, 69, 42, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0i6qk"]
+atlas = ExtResource("1_1s6cp")
+region = Rect2(3, 69, 42, 7)
+
+[node name="Life" type="TextureProgressBar"]
+offset_left = -16.0
+offset_top = 17.0
+offset_right = 26.0
+offset_bottom = 24.0
+scale = Vector2(0.75, 0.75)
+value = 100.0
+rounded = true
+texture_under = SubResource("AtlasTexture_w3wsc")
+texture_progress = SubResource("AtlasTexture_0i6qk")
+script = ExtResource("2_a7ge1")
+temp_vis = true
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="value_changed" from="." to="." method="_on_value_changed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
