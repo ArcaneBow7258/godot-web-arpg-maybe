@@ -5,12 +5,18 @@ var node_sprite : AnimatedSprite2D
 var point_sprite : Sprite2D
 var cam : Camera2D
 var attack_pivot : Node2D
-signal on_hit
+# Life stu
+var life_bar : TextureProgressBar
+
+signal on_hit(damage)
 func _ready():
 	node_sprite = get_node("Sprite")
 	node_sprite.play()
 	point_sprite = get_node("Pointer")
 	attack_pivot = $Attack/AttackAnimPivot
+	life_bar = $Life
+	#activate hud
+	Global.get_hud().start.emit(self)
 	return
 	
 func _process(delta):
@@ -55,3 +61,8 @@ func pointer_camera():
 
 func _on_life_value_changed(value):
 	pass # Replace with function body.
+
+
+func _on_on_hit(damage):
+	print('player hit')
+	life_bar.value -= damage

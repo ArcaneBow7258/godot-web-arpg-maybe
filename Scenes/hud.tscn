@@ -1,0 +1,89 @@
+[gd_scene load_steps=9 format=3 uid="uid://drvmuayyl61ra"]
+
+[ext_resource type="Script" path="res://Scripts/HUD.gd" id="1_g85ul"]
+[ext_resource type="Texture2D" uid="uid://d1j45o251jone" path="res://Atlas/Bars.tres" id="2_kwdyi"]
+[ext_resource type="Texture2D" uid="uid://dgpqcennif1xj" path="res://Atlas/Boxes.tres" id="3_j3xpb"]
+[ext_resource type="Texture2D" uid="uid://x5pw41x4pobr" path="res://Atlas/Loading.tres" id="4_ndis7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4bin"]
+atlas = ExtResource("2_kwdyi")
+region = Rect2(6, 131, 38, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ruiu0"]
+atlas = ExtResource("2_kwdyi")
+region = Rect2(57, 133, 32, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tblye"]
+atlas = ExtResource("2_kwdyi")
+region = Rect2(57, 149, 32, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3o65i"]
+atlas = ExtResource("3_j3xpb")
+region = Rect2(0, 48, 32, 32)
+
+[node name="HUD" type="CanvasLayer" node_paths=PackedStringArray("life_bar", "res_bar")]
+script = ExtResource("1_g85ul")
+life_bar = NodePath("Bars/LifeBar")
+res_bar = NodePath("Bars/ResourceBar")
+
+[node name="Bars" type="VBoxContainer" parent="."]
+offset_right = 38.0
+offset_bottom = 26.0
+scale = Vector2(3, 3)
+theme_override_constants/separation = 2
+
+[node name="LifeBar" type="TextureProgressBar" parent="Bars"]
+layout_mode = 2
+value = 100.0
+texture_under = SubResource("AtlasTexture_r4bin")
+texture_progress = SubResource("AtlasTexture_ruiu0")
+texture_progress_offset = Vector2(3, 2)
+
+[node name="ResourceBar" type="TextureProgressBar" parent="Bars"]
+layout_mode = 2
+value = 100.0
+texture_under = SubResource("AtlasTexture_r4bin")
+texture_progress = SubResource("AtlasTexture_tblye")
+texture_progress_offset = Vector2(3, 2)
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 301.0
+offset_top = 327.0
+offset_right = 301.0
+offset_bottom = 331.0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Panel"]
+offset_left = -301.0
+offset_top = -327.0
+offset_right = -261.0
+offset_bottom = -287.0
+
+[node name="Abilities" type="GridContainer" parent="Panel/NinePatchRect"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 273.0
+offset_top = 287.0
+offset_right = 401.0
+offset_bottom = 319.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 6
+size_flags_vertical = 10
+columns = 3
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Panel/NinePatchRect/Abilities"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+value = 45.0
+fill_mode = 5
+texture_under = SubResource("AtlasTexture_3o65i")
+texture_progress = ExtResource("4_ndis7")
+
+[connection signal="start" from="." to="." method="_on_start"]

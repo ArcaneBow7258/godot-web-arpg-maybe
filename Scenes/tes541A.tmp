@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ktgiuhnoc5aq"]
+[gd_scene load_steps=14 format=3 uid="uid://ktgiuhnoc5aq"]
 
 [ext_resource type="TileSet" uid="uid://cwqjnx7npcjwn" path="res://Tileset/room.tres" id="1_xi0fo"]
 [ext_resource type="Script" path="res://Scripts/DrunkMan.gd" id="2_ns3ex"]
@@ -7,12 +7,10 @@
 [ext_resource type="SpriteFrames" uid="uid://cihe8j7ak8wsn" path="res://Animations/M_Dwarf.tres" id="4_07cxk"]
 [ext_resource type="Texture2D" uid="uid://841xjmns1qn1" path="res://Sprites/Direction.png" id="5_hk7d7"]
 [ext_resource type="Script" path="res://Scripts/Attack.gd" id="7_uvhp8"]
-[ext_resource type="Script" path="res://Scripts/enemy_melee_self.gd" id="8_4ewyp"]
 [ext_resource type="SpriteFrames" uid="uid://bs4mr3r825wut" path="res://Animations/Attack_Animations.tres" id="8_jumyx"]
 [ext_resource type="PackedScene" uid="uid://dm3wjkf6jjgeq" path="res://Scenes/life.tscn" id="8_qdrgb"]
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="9_k1cfw"]
 [ext_resource type="Texture2D" uid="uid://f0jef7vb1ai5" path="res://Sprites/0x72_DungeonTilesetII_v1.6/frames/pumpkin_dude_idle_anim_f0.png" id="9_tuxtq"]
-[ext_resource type="PackedScene" uid="uid://drvmuayyl61ra" path="res://Scenes/hud.tscn" id="12_cy8dd"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tk86s"]
 radius = 5.588
@@ -21,8 +19,6 @@ height = 15.176
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vvk61"]
 
 [node name="Node2D" type="Node2D"]
-
-[node name="HUD" parent="." instance=ExtResource("12_cy8dd")]
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(0, -1)
@@ -52,33 +48,6 @@ seed = 818
 position = Vector2(24, 104)
 texture = ExtResource("3_rtsah")
 
-[node name="Enemy_Temaple" type="CharacterBody2D" parent="."]
-position = Vector2(101, 84)
-collision_layer = 2
-collision_mask = 5
-script = ExtResource("9_k1cfw")
-speed = 2000.0
-aggro_range = 100.0
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Enemy_Temaple"]
-path_postprocessing = 1
-debug_enabled = true
-
-[node name="Sprite2D" type="Sprite2D" parent="Enemy_Temaple"]
-texture = ExtResource("9_tuxtq")
-
-[node name="HitBox" type="CollisionShape2D" parent="Enemy_Temaple"]
-position = Vector2(0, 2)
-shape = SubResource("CapsuleShape2D_tk86s")
-
-[node name="Life" parent="Enemy_Temaple" instance=ExtResource("8_qdrgb")]
-offset_top = 16.0
-offset_bottom = 23.0
-maxLife = 10
-
-[node name="attacklogic" type="Node2D" parent="Enemy_Temaple"]
-script = ExtResource("8_4ewyp")
-
 [node name="Char" type="CharacterBody2D" parent="."]
 position = Vector2(304, 84)
 disable_mode = 2
@@ -94,8 +63,6 @@ frame_progress = 0.730715
 [node name="HitBox" type="CollisionShape2D" parent="Char" groups=["Player"]]
 position = Vector2(0.947006, 6.588)
 shape = SubResource("CapsuleShape2D_tk86s")
-
-[node name="Timer" type="Timer" parent="Char/HitBox"]
 
 [node name="Camera2D" type="Camera2D" parent="Char"]
 scale = Vector2(0.593341, 1.70455)
@@ -125,13 +92,28 @@ animation = &"attack_1"
 one_shot = true
 
 [node name="Life" parent="Char" instance=ExtResource("8_qdrgb")]
-offset_left = -12.0
-offset_top = 16.0
-offset_right = 22.0
-offset_bottom = 23.0
-maxLife = 100
 temp_vis = false
 
-[connection signal="player_collide" from="Enemy_Temaple" to="Enemy_Temaple" method="_on_player_collide"]
-[connection signal="on_empty" from="Enemy_Temaple/Life" to="Enemy_Temaple" method="_on_life_on_empty"]
-[connection signal="on_hit" from="Char" to="Char" method="_on_on_hit"]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(101, 84)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("9_k1cfw")
+speed = 2000.0
+aggro_range = 100.0
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture = ExtResource("9_tuxtq")
+
+[node name="HitBox" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_tk86s")
+
+[node name="Life" parent="CharacterBody2D" instance=ExtResource("8_qdrgb")]
+offset_top = 16.0
+offset_bottom = 23.0
+
+[connection signal="player_collide" from="CharacterBody2D" to="CharacterBody2D" method="_on_player_collide"]
+[connection signal="on_empty" from="CharacterBody2D/Life" to="CharacterBody2D" method="_on_life_on_empty"]

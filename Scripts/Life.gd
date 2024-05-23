@@ -1,11 +1,11 @@
 extends TextureProgressBar
 @export var maxLife : int
-@export var curLife : int
 @export var temp_vis : bool
 @export var timeout : float = 2
 @export var timer : Timer
 signal on_empty
 func _ready():
+	value = maxLife
 	timer =  $Timer
 	if temp_vis:
 		visible = false

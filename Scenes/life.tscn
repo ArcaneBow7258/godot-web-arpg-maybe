@@ -5,16 +5,16 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w3wsc"]
 atlas = ExtResource("1_1s6cp")
-region = Rect2(195, 69, 42, 7)
+region = Rect2(295, 70, 34, 5)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0i6qk"]
 atlas = ExtResource("1_1s6cp")
-region = Rect2(3, 69, 42, 7)
+region = Rect2(55, 70, 34, 5)
 
-[node name="Life" type="TextureProgressBar"]
+[node name="Life" type="TextureProgressBar" node_paths=PackedStringArray("timer")]
 offset_left = -16.0
 offset_top = 17.0
-offset_right = 26.0
+offset_right = 18.0
 offset_bottom = 24.0
 scale = Vector2(0.75, 0.75)
 value = 100.0
@@ -23,6 +23,7 @@ texture_under = SubResource("AtlasTexture_w3wsc")
 texture_progress = SubResource("AtlasTexture_0i6qk")
 script = ExtResource("2_a7ge1")
 temp_vis = true
+timer = NodePath("Timer")
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
