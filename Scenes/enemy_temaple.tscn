@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://dqepljv1nxuwv"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_ihrlu"]
+[ext_resource type="Texture2D" uid="uid://f0jef7vb1ai5" path="res://Sprites/0x72_DungeonTilesetII_v1.6/frames/pumpkin_dude_idle_anim_f0.png" id="2_4bqor"]
+[ext_resource type="PackedScene" uid="uid://dm3wjkf6jjgeq" path="res://Scenes/life.tscn" id="3_607cx"]
+[ext_resource type="Script" path="res://Scripts/enemy_melee_self.gd" id="4_fs0uc"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tk86s"]
+radius = 5.588
+height = 15.176
+
+[node name="Enemy_Temaple" type="CharacterBody2D"]
+position = Vector2(101, 84)
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("1_ihrlu")
+speed = 2000.0
+aggro_range = 100.0
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_postprocessing = 1
+avoidance_enabled = true
+debug_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_4bqor")
+
+[node name="HitBox" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_tk86s")
+
+[node name="Life" parent="." instance=ExtResource("3_607cx")]
+offset_left = -13.0
+offset_top = 16.0
+offset_right = 21.0
+offset_bottom = 23.0
+max_value = 20.0
+value = 10.0
+maxLife = 20
+
+[node name="attacklogic" type="Node2D" parent="."]
+script = ExtResource("4_fs0uc")
+
+[connection signal="player_collide" from="." to="." method="_on_player_collide"]
+[connection signal="on_empty" from="Life" to="." method="_on_life_on_empty"]

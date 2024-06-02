@@ -1,6 +1,7 @@
 extends ShapeCast2D
 @export var attack_rate : float
 @export var attack_range : float = 50
+@export var attack_damage : float = 10
 var last_attack : float
 var timer : Timer
 var anim : AnimatedSprite2D
@@ -18,7 +19,8 @@ func _input(event):
 			anim.speed_scale = 1 /  attack_rate 
 			anim.stop()
 			anim.play("attack_1")
-			anim.scale.x = (attack_range + 8) / 32
+			anim.scale.x = (attack_range + 16) / 32
+			anim.position.x = 32 * anim.scale.x / 2 
 			anim.look_at(get_global_mouse_position())
 			#anim.rotate(-3*PI/4)
 			
@@ -35,6 +37,6 @@ func _input(event):
 					var colide := get_collider(i) as Node2D
 					var life := colide.find_child("Life") as TextureProgressBar
 					if life:
-						life.value -= 10
+						life.value -= attack_damage
 			timer.start()
 			#enabled = false

@@ -6,6 +6,7 @@ extends TextureProgressBar
 signal on_empty
 func _ready():
 	value = maxLife
+	max_value = maxLife
 	timer =  $Timer
 	if temp_vis:
 		visible = false
