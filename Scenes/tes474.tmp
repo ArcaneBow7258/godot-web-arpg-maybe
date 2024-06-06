@@ -112,7 +112,7 @@ region = Rect2(160, 112, 16, 16)
 radius = 100.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2yy6m"]
-radius = 50.0
+radius = 30.0
 
 [node name="Node2D" type="Node2D"]
 
@@ -211,13 +211,13 @@ offset_bottom = 23.0
 maxLife = 100
 temp_vis = false
 
-[node name="test scarry" type="CharacterBody2D" parent="." groups=["test_d"]]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["test_d"]]
 position = Vector2(293, 194)
 
-[node name="img" type="Sprite2D" parent="test scarry" groups=["test_d"]]
+[node name="test scarry" type="Sprite2D" parent="CharacterBody2D" groups=["test_d"]]
 texture = SubResource("AtlasTexture_tgih6")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="test scarry"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 shape = SubResource("RectangleShape2D_xny2x")
 
 [node name="test context" type="CharacterBody2D" parent="." groups=["Enemy"]]
@@ -234,12 +234,13 @@ shape = SubResource("CircleShape2D_vh22t")
 script = ExtResource("13_0wg5x")
 interest_groups = PackedStringArray("test_i")
 danger_groups = PackedStringArray("test_d")
+resolution = 8
 neighbor_propogation = 0.75
 neighbor_danger = 1
 neighbor_interest = 2
 bias = 1.2
 max_speed = 1500.0
-spacing_factor = 0.5
+spacing_factor = 0.25
 spacing_body = NodePath("Spacing")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="test context/ContextBasedSteer"]

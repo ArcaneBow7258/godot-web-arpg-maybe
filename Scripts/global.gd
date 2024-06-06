@@ -10,3 +10,7 @@ func set_hud(new_hud):
 	hud = new_hud
 func get_hud():
 	return hud
+func intersect(a:Array, b:Array):
+	for i in a:
+		if b.has(i):
+			return true
